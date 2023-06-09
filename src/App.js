@@ -1,23 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import { Citieseventslist } from './components/citieseventslist';
+import { CITIESEVENTS } from './components/citiesevents';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Menu } from './components/menu';
+import { Addcitiesevents } from './components/addcitiesevents';
+import { useContext } from "react";
+import { FavoriteseventsContext } from './contexts/favoritesevents.context';
 
 function App() {
+  
+  const { favoriteseventscount } = useContext(FavoriteseventsContext);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <header>
+          <h1>Favorite events count: {favoriteseventscount}</h1>
+          <Menu/>
+        </header>
+
+        <Routes>
+          <Route path="cities" element={<Citieseventslist cities={CITIESEVENTS} />} />
+          <Route path="add-citi" element={<Addcitiesevents />} />
+          <Route path="*" element={<h1>Page Not Found!</h1>} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
